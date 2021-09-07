@@ -1,5 +1,7 @@
 import 'package:dordum/const/AppConstant.dart';
+import 'package:dordum/routs.dart';
 import 'package:dordum/screens/splash/splash_screen.dart';
+import 'package:dordum/theme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,14 +15,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
-          fontFamily: "Muli",
-          textTheme: TextTheme(
-              bodyText1: TextStyle(color: AppColorsConst.dTextColor),
-              bodyText2: TextStyle(color: AppColorsConst.dTextColor)),
-          visualDensity: VisualDensity.adaptivePlatformDensity),
+      theme: theme(),
       home: SplashScreen(),
+      //  initialRoute: SplashScreen.routeName!,
+      //  routes: routes,
     );
   }
 }
+
+

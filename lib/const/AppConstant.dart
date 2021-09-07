@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:dordum/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class AppColorsConst {
 
   static const dAnimationDuration = Duration(milliseconds: 200);
 
-  final headingStyle = TextStyle(
+  static final headingStyle = TextStyle(
     fontSize: 28,
     fontWeight: FontWeight.bold,
     color: Colors.black,
@@ -24,4 +25,18 @@ class AppColorsConst {
   );
 
   static const defaultDuration = Duration(milliseconds: 250);
+
+  // Form Error
+  static final RegExp emailValidatorRegExp =
+      RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  static const String dEmailNullError = "Please Enter your email";
+  static const String dInvalidEmailError = "Please Enter Valid Email";
+  static const String dPassNullError = "Please Enter your password";
+  static const String dShortPassError = "Password is too short";
+  static const String dMatchPassError = "Passwords don't match";
+  static const String dNamelNullError = "Please Enter your name";
+  static const String dPhoneNumberNullError = "Please Enter your phone number";
+  static const String dAddressNullError = "Please Enter your address";
+
+
 }
