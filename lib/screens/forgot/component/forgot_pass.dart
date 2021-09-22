@@ -3,6 +3,8 @@ import 'package:dordum/components/default_button.dart';
 import 'package:dordum/components/formError.dart';
 import 'package:dordum/components/no_account_text.dart';
 import 'package:dordum/const/AppConstant.dart';
+import 'package:dordum/screens/otp/otp_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../size_config.dart';
 
@@ -103,7 +105,8 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
             text: "Continue",
             press: () {
               if (_formKey.currentState!.validate()) {
-                // Do what you want to do
+                Navigator.push(
+                    context, CupertinoPageRoute(builder: (_) => OtpScreen()));
               }
             },
           ),

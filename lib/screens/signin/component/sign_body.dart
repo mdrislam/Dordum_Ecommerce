@@ -1,13 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dordum/components/no_account_text.dart';
 import 'package:dordum/components/social_card.dart';
+import 'package:dordum/screens/complete_profile/complete_profile_screen.dart';
+import 'package:dordum/screens/navController/buttom_nav_conroller.dart';
 import 'package:dordum/screens/signin/component/signin_form.dart';
 import 'package:dordum/size_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class SignInBody extends StatelessWidget {
+class SignInBody extends StatefulWidget {
   const SignInBody({Key? key}) : super(key: key);
 
+  @override
+  State<SignInBody> createState() => _SignInBodyState();
+}
+
+class _SignInBodyState extends State<SignInBody> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -31,15 +41,18 @@ class SignInBody extends StatelessWidget {
                 "Sign in with your email and password  \nor continue with social media",
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: SizeConfig.screenHight !* 0.08),
+              SizedBox(height: SizeConfig.screenHight! * 0.08),
               SigInForm(),
-              SizedBox(height: SizeConfig.screenHight !* 0.08),
+              SizedBox(height: SizeConfig.screenHight! * 0.08),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SocialCard(
                     icon: "assets/icons/google-icon.svg",
-                    press: () {},
+                    press: () {
+                      getSigninWithGoogle(context);
+                      print("Google Button Click");
+                    },
                   ),
                   SocialCard(
                     icon: "assets/icons/facebook-2.svg",
@@ -58,5 +71,45 @@ class SignInBody extends StatelessWidget {
         ),
       ),
     ));
+  }
+
+  getSigninWithGoogle(BuildContext context) async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+    final GoogleSignInAccount? googleSignInAccount =
+        await _googleSignIn.signIn();
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount!.authentication;
+    final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken);
+    await _auth.signInWithCredential(credential);
+
+    if (_auth.currentUser!.uid.isNotEmpty) {
+      await FirebaseFirestore.instance
+          .collection("User_Profile_data")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get()
+          .then((doc) {
+        if (doc.exists) {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => BottomNavController(),
+            ),
+            (route) => false,
+          );
+        } else {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (BuildContext context) => CompleteProfileScreen(),
+            ),
+            (route) => false,
+          );
+        }
+      });
+    }
   }
 }

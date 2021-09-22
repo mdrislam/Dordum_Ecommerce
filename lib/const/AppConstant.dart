@@ -26,9 +26,7 @@ class AppColorsConst {
 
   static const defaultDuration = Duration(milliseconds: 250);
 
-  // Form Error
-  static final RegExp emailValidatorRegExp =
-      RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  static final RegExp emailValidatorRegExp = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$');
   static const String dEmailNullError = "Please Enter your email";
   static const String dInvalidEmailError = "Please Enter Valid Email";
   static const String dPassNullError = "Please Enter your password";
@@ -37,6 +35,19 @@ class AppColorsConst {
   static const String dNamelNullError = "Please Enter your name";
   static const String dPhoneNumberNullError = "Please Enter your phone number";
   static const String dAddressNullError = "Please Enter your address";
+  static final otpInputDecoration = InputDecoration(
+    contentPadding:
+    EdgeInsets.symmetric(vertical: getProportionateScreenWidth(15)),
+    border: outlineInputBorder(),
+    focusedBorder: outlineInputBorder(),
+    enabledBorder: outlineInputBorder(),
+  );
 
 
+}
+ OutlineInputBorder outlineInputBorder() {
+  return OutlineInputBorder(
+    borderRadius: BorderRadius.circular(getProportionateScreenWidth(15)),
+    borderSide: BorderSide(color: AppColorsConst.dTextColor),
+  );
 }

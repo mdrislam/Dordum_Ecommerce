@@ -2,6 +2,7 @@ import 'package:dordum/components/default_button.dart';
 import 'package:dordum/const/AppConstant.dart';
 import 'package:dordum/screens/signin/sign_in_screen.dart';
 import 'package:dordum/screens/splash/component/splash_content.dart';
+import 'package:dordum/shared_preferences/shared_preferences.dart';
 import 'package:dordum/size_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -71,12 +72,19 @@ class _BodyState extends State<Body> {
                         DefaultButton(
                           text: "Continue",
                           press: () {
-                            print("Button Press");
-                            //Navigator.pushNamed(context, SignInScreen.routeName!);
-                            Navigator.push(
-                                context,
-                                CupertinoPageRoute(
-                                    builder: (_) => SignInScreen()));
+                            Shared_Preferences.setUserTypeStatus(true);
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    SignInScreen(),
+                              ),
+                              (route) => false,
+                            );
+                            // Navigator.push(
+                            //     context,
+                            //     CupertinoPageRoute(
+                            //         builder: (_) => SignInScreen()));
                           },
                         ),
                         Spacer(),

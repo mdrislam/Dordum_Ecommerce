@@ -1,8 +1,13 @@
+import 'package:dordum/screens/home/home_screen.dart';
+import 'package:dordum/screens/navController/buttom_nav_conroller.dart';
 import 'package:dordum/screens/signin/component/sign_body.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SignInScreen extends StatelessWidget {
   static String? routeName = "/sign_in";
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -11,6 +16,7 @@ class SignInScreen extends StatelessWidget {
       body: SignInBody(),
     );
   }
+
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
@@ -30,7 +36,16 @@ class SignInScreen extends StatelessWidget {
       actions: [
         GestureDetector(
             onTap: () {
-              Navigator.of(context).pop();
+
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => BottomNavController(),
+                ),
+                    (route) => false,
+              );
+
+              // Navigator.push(context, CupertinoPageRoute(builder: (_)=>BottomNavController()));
             },
             child: Padding(
               padding: const EdgeInsets.all(10.0),

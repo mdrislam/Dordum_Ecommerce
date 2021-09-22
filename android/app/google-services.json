@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "720428962084",
+    "project_id": "ebay-auction",
+    "storage_bucket": "ebay-auction.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720428962084:android:e8b6af23331b647a6423b1",
+        "android_client_info": {
+          "package_name": "com.mristudio.dordum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "720428962084-c3h1il4309jg5dm8pkgk20v3smnqg7fa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mristudio.dordum",
+            "certificate_hash": "e1063c882580fde1be0333746c941ce903cecbe7"
+          }
+        },
+        {
+          "client_id": "720428962084-rk2hu0rjl4alu6qkfeoul3rmejin3j5d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZBThm83jdkDRKGogwPt_Jlh4SpdqcFHY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "720428962084-rk2hu0rjl4alu6qkfeoul3rmejin3j5d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

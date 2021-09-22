@@ -31,6 +31,9 @@ dependencies:
   carousel_slider: ^4.0.0
   dots_indicator: ^2.0.0
   flutter_svg: ^0.22.0 # help us to use SVG in our app
+  curved_navigation_bar: ^1.0.1
+  shared_preferences: ^2.0.8
+  google_sign_in: ^5.0.7
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -2,10 +2,14 @@ import 'package:dordum/components/customsurfixicon.dart';
 import 'package:dordum/components/default_button.dart';
 import 'package:dordum/components/formError.dart';
 import 'package:dordum/const/AppConstant.dart';
+import 'package:dordum/screens/complete_profile/complete_profile_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../../size_config.dart';
-
 
 class SignUpForm extends StatefulWidget {
   @override
@@ -54,6 +58,12 @@ class _SignUpFormState extends State<SignUpForm> {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
                 //Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                registredNewUserByEmailPassword(email!, password!);
+
+                // Navigator.push(
+                //     context,
+                //     CupertinoPageRoute(
+                //         builder: (_) => CompleteProfileScreen()));
               }
             },
           ),
@@ -102,7 +112,7 @@ class _SignUpFormState extends State<SignUpForm> {
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: AppColorsConst.dPassNullError);
-        } else if (value.length >= 8) {
+        } else if (value.length >= 6) {
           removeError(error: AppColorsConst.dShortPassError);
         }
         password = value;
@@ -111,7 +121,7 @@ class _SignUpFormState extends State<SignUpForm> {
         if (value!.isEmpty) {
           addError(error: AppColorsConst.dPassNullError);
           return "";
-        } else if (value.length < 8) {
+        } else if (value.length < 6) {
           addError(error: AppColorsConst.dShortPassError);
           return "";
         }
@@ -159,5 +169,53 @@ class _SignUpFormState extends State<SignUpForm> {
         suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
       ),
     );
+  }
+
+  registredNewUserByEmailPassword(String email, String password) async {
+    try {
+      final User? user = (await FirebaseAuth.instance
+              .createUserWithEmailAndPassword(email: email, password: password)).user;
+
+      if (user!.uid.isNotEmpty) {
+        print("Success");
+        Navigator.push(context,
+            CupertinoPageRoute(builder: (context) => CompleteProfileScreen()));
+      } else {
+        Fluttertoast.showToast(
+            msg: "Something was Wrong",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        Fluttertoast.showToast(
+            msg: "The password provided is too weak.",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        Fluttertoast.showToast(
+            msg: "The account already exists for that email.",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print("Error: " + e.toString());
+    }
   }
 }
